@@ -131,3 +131,144 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = randomProject;
     });
 });
+// Base de datos de proyectos
+const projectsDatabase = [
+    {
+        id: 1,
+        title: "Cerveza Huaytapallana",
+        description: "Sitio web oficial para marca de cerveza artesanal peruana",
+        url: "projects/cerveza-huaytapallana.html",
+        image: "assets/img/huaytapallana-thumb.jpg",
+        tags: ["wordpress", "ecommerce", "diseño"]
+    },
+    {
+        id: 2,
+        title: "Portafolio Artista",
+        description: "Galería interactiva para artista visual profesional",
+        url: "projects/portafolio-artista.html",
+        image: "assets/img/artista-thumb.jpg",
+        tags: ["react", "diseño", "galería"]
+    },
+    {
+        id: 3,
+        title: "App Climática",
+        description: "Aplicación de pronóstico del tiempo con geolocalización",
+        url: "projects/clima-app.html",
+        image: "assets/img/clima-thumb.jpg",
+        tags: ["javascript", "api", "weather"]
+    }
+];
+
+// Elementos del DOM
+const diceButton = document.getElementById('random-dice');
+const diceModal = document.getElementById('dice-modal');
+const diceResult = document.getElementById('dice-result');
+const visitButton = document.getElementById('visit-project');
+const closeModal = document.querySelector('.close-modal');
+
+// Variable para guardar el proyecto seleccionado
+let selectedProject = null;
+
+// Función para tirar el dado
+diceButton.addEventListener('click', function() {
+    // Activar animación
+    this.classList.add('rolling');
+    diceButton.disabled = true;
+    
+    // Mostrar mensaje de carga
+    diceResult.innerHTML = '<p>Tirando el dado...</p>';
+    diceModal.style.display = 'block';
+    
+    // Simular tiempo de "lanzamiento" (1.5 segundos)
+    setTimeout(() => {
+        // Seleccionar proyecto aleatorio
+        const randomIndex = Math.floor(Math.random() * projectsDatabase.length);
+        selectedProject = projectsDatabase[randomIndex];
+        
+        // Detener animación
+        diceButton.classList.remove('rolling');
+        diceButton.disabled = false;
+        
+        // Mostrar resultado
+        showProjectResult(selectedProject);
+    }, 1500);
+});
+
+// Función para mostrar el resultado
+function showProjectResult(project) {
+    diceResult.innerHTML = `
+        <h4>${project.title}</h4>
+        <img src="${project.image}" alt="${project.title}">
+        <p>${project.description}</p>
+        <div class="project-tags">
+            ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+        </div>
+    `;
+    
+    visitButton.onclick = function() {
+        window.location.href = project.url;
+    };
+}
+
+// Cerrar modal
+closeModal.addEventListener('click', function() {
+    diceModal.style.display = 'none';
+});
+
+// Cerrar al hacer clic fuera del modal
+window.addEventListener('click', function(event) {
+    if (event.target === diceModal) {
+        diceModal.style.display = 'none';
+    }
+});
+
+// Efecto de confeti al ganar (opcional)
+function showConfetti() {
+    const confettiCount = 100;
+    const container = document.createElement('div');
+    container.style.position = 'fixed';
+    container.style.top = '0';
+    container.style.left = '0';
+    container.style.width = '100%';
+    container.style.height = '100%';
+    container.style.pointerEvents = 'none';
+    container.style.zIndex = '1001';
+    
+    for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'absolute';
+        confetti.style.width = '10px';
+        confetti.style.height = '10px';
+        confetti.style.backgroundColor = getRandomColor();
+        confetti.style.borderRadius = '50%';
+        confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.top = '-10px';
+        
+        // Animación personalizada para cada confeti
+        const animation = document.createElement('style');
+        animation.innerHTML = `
+            @keyframes confettiFall {
+                to {
+                    transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+                    opacity: 0;
+                    left: ${Math.random() * 100}%;
+                }
+            }
+        `;
+        confetti.appendChild(animation);
+        container.appendChild(confetti);
+    }
+    
+    document.body.appendChild(container);
+    
+    // Eliminar después de la animación
+    setTimeout(() => {
+        container.remove();
+    }, 5000);
+}
+
+function getRandomColor() {
+    const colors = ['#4285F4', '#EA4335', '#FBBC05', '#34A853', '#8A2BE2'];
+    return colors[Math.floor(Math.random() * colors.length)];
+}

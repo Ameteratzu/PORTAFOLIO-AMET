@@ -45,8 +45,12 @@
             </div>
             <div class="search-buttons">
                 <button class="search-button">Buscar en mi portafolio</button>
-                <button class="lucky-button">Voy a tener suerte</button>
-            </div>
+                <button id="random-dice" class="dice-button">
+                    Prueba tu suerte
+                    <span class="dice-icon">🎲</span>
+                </button>
+            </div>  
+            
         </div>
         
         <div class="search-tabs">
@@ -71,6 +75,7 @@
                 Más
             </a>
         </div>
+        
     </main>
     
     <footer class="search-footer">
@@ -85,7 +90,18 @@
             </div>
         </div>
     </footer>
-    
+    <div id="dice-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>¡Salio el proyecto!</h3>
+            <div id="dice-result" class="dice-result">
+                <!-- Contenido dinámico -->
+            </div>
+            <button id="visit-project" class="action-button primary">
+                Visitar Proyecto
+            </button>
+        </div>
+    </div>
     <script src="assets/js/google-search.js"></script>
 </body>
 </html>
