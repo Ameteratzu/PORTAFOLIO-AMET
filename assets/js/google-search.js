@@ -272,3 +272,47 @@ function getRandomColor() {
     const colors = ['#4285F4', '#EA4335', '#FBBC05', '#34A853', '#8A2BE2'];
     return colors[Math.floor(Math.random() * colors.length)];
 }
+
+// Autocompletado inteligente con búsqueda difusa
+function fuzzySearch(query, projects) {
+    return projects.filter(project => {
+        const searchString = `${project.title} ${project.tags.join(' ')}`.toLowerCase();
+        return searchString.includes(query.toLowerCase());
+    });
+}
+
+// Integración con GitHub API
+async function loadGitHubProjects() {
+    try {
+        const response = await fetch('https://api.github.com/users/Ameteratzu/repos');
+        const repos = await response.json();
+        
+        const githubProjects = repos.map(repo => ({
+            title: repo.name,
+            description: repo.description,
+            url: repo.html_url,
+            tags: repo.topics || [],
+            language: repo.language
+        }));
+        
+        // Añadir a la base de datos de búsqueda
+        searchDatabase = [...searchDatabase, ...githubProjects];
+    } catch (error) {
+        console.error('Error cargando proyectos de GitHub:', error);
+    }
+}
+
+// Búsqueda por tags
+function searchByTags(tags) {
+    return searchDatabase.filter(project => 
+        tags.every(tag => project.tags.includes(tag))
+    );
+}
+
+// Historial de búsquedas
+const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+function updateSearchHistory(query) {
+    searchHistory.unshift(query);
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory.slice(0, 5)));
+}
