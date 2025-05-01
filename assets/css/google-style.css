@@ -1717,7 +1717,6 @@ body.dark-mode {
     color: #8ab4f8;
 }
 
-
 /* Certificaciones */
 .certifications-grid {
     display: grid;
@@ -1825,3 +1824,4 @@ body.dark-mode {
         transition: none !important;
     }
 }
+/* Fin de los estilos CSS */

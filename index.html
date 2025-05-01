@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Portafolio | Buscar</title>
     <link rel="stylesheet" href="assets/css/google-style.css">
+    <link rel="stylesheet" href="assets/css/google-account">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
@@ -18,8 +19,12 @@
             <a href="projects/">Proyectos</a>
             <a href="contact.html">Contacto</a>
             <button class="apps-button"><span class="material-icons">apps</span></button>
-            <button class="profile-button">P</button>
+            <button class="profile-button" id="googleSignInBtn">
+                <span class="material-icons">account_circle</span>
+                <span>Iniciar Sesion Google</span>
+              </button>
         </div>
+        <div id="googleButtonContainer" style="display: none;"></div>
     </header>
     
     <main class="search-main">
@@ -62,9 +67,7 @@
                 <span class="material-icons">image</span>
                 Proyectos
             </a>
-            <a href="#" class="tab">
-                <span class="material-icons">play_circle</span>
-                Videos
+
             </a>
             <a href="#" class="tab">
                 <span class="material-icons">article</span>
@@ -87,6 +90,7 @@
                 <a href="about.html">Sobre mí</a>
                 <a href="projects/">Proyectos</a>
                 <a href="contact.html">Contacto</a>
+                
             </div>
         </div>
     </footer>
@@ -103,5 +107,60 @@
         </div>
     </div>
     <script src="assets/js/google-search.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        // Configuración inicial
+        function initializeGoogleSignIn() {
+          google.accounts.id.initialize({
+            client_id: '618907884087-s2aqf6qffra9i6jahldqbkildvlpracg.apps.googleusercontent.com',
+            callback: handleCredentialResponse,
+            auto_select: false
+          });
+      
+          // Renderiza el botón (opcionalmente puedes personalizar más)
+          google.accounts.id.renderButton(
+            document.getElementById("googleSignInBtn"),
+            { theme: "outline", size: "large" } // Personalización
+          );
+        }
+      
+        // Manejo de la respuesta
+        function handleCredentialResponse(response) {
+          if (response.credential) {
+            // Decodifica el JWT para obtener la información del usuario
+            const userData = JSON.parse(atob(response.credential.split('.')[1]));
+            
+            // Guarda los datos del usuario (puedes usar localStorage o tu estado de aplicación)
+            localStorage.setItem('googleUser', JSON.stringify({
+              name: userData.name,
+              email: userData.email,
+              picture: userData.picture
+            }));
+      
+            // Actualiza la UI
+            updateProfileButton(userData);
+          }
+        }
+      
+        // Actualizar el botón de perfil
+        function updateProfileButton(userData) {
+          const button = document.getElementById('googleSignInBtn');
+          button.innerHTML = `
+            <img src="${userData.picture}" class="profile-pic" alt="Perfil">
+            <span>${userData.name}</span>
+          `;
+          button.onclick = handleSignOut;
+        }
+      
+        // Manejo de logout
+        function handleSignOut() {
+          localStorage.removeItem('googleUser');
+          google.accounts.id.disableAutoSelect();
+          location.reload(); // O actualiza la UI según necesites
+        }
+      
+        // Inicializar cuando el documento esté listo
+        document.addEventListener('DOMContentLoaded', initializeGoogleSignIn);
+      </script>
 </body>
 </html>
