@@ -1,0 +1,39 @@
+/* theme.css */
+/* 10. Dark Mode Toggle */
+body.dark-mode {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+  }
+  body.dark-mode a { color: var(--link-dark); }
+  body.dark-mode .results-header,
+  body.dark-mode .search-header,
+  body.dark-mode .results-nav,
+  body.dark-mode .results-footer,
+  body.dark-mode .featured-project,
+  body.dark-mode .tech-details,
+  body.dark-mode .info-card {
+    background-color: var(--card-dark);
+    border-color: var(--border-dark);
+  }
+  body.dark-mode .search-box,
+  body.dark-mode .project-screenshot { background-color: var(--card-dark); }
+  body.dark-mode .result-screenshot img { filter: brightness(0.8); }
+
+  /* === Activar dark-mode en Proyectos === */
+body.google-results-style {
+  /* Sobrescribe las variables claras por las oscuras: */
+  --bg-light:    var(--bg-dark);
+  --text-light:  var(--text-dark);
+  --border-light: var(--border-dark);
+  --card-light:  var(--card-dark);
+  --icon-light:  var(--icon-dark);
+  --link-light:  var(--link-dark);
+}
+/* También aplica los overrides de dark-mode */
+body.google-results-style a               { color: var(--link-dark); }
+body.google-results-style .search-box-results,
+body.google-results-style .project-screenshot { background: var(--card-dark); border-color: var(--border-dark); }
+body.google-results-style .project-description,
+body.google-results-style .results-stats,
+body.google-results-style .related-searches p { color: var(--icon-dark); }
+/* etc. puedes replicar aquí cualquier regla que esté bajo body.dark-mode */

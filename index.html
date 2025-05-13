@@ -4,8 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Portafolio | Buscar</title>
-    <link rel="stylesheet" href="assets/css/google-style.css">
-    <link rel="stylesheet" href="assets/css/google-account">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/home.css">        <!-- según la página -->
+    <link rel="stylesheet" href="assets/css/results.css">
+    <link rel="stylesheet" href="assets/css/contact.css">
+    <link rel="stylesheet" href="assets/css/about.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
@@ -50,9 +58,9 @@
             </div>
             <div class="search-buttons">
                 <button class="search-button">Buscar en mi portafolio</button>
-                <button id="random-dice" class="dice-button">
+                <button id="random-dice" class="lucky-button">
                     Prueba tu suerte
-                    <span class="dice-icon">🎲</span>
+                    <span class="-icon">🎲</span>
                 </button>
             </div>  
             
@@ -82,6 +90,7 @@
     </main>
     
     <footer class="search-footer">
+        
         <div class="footer-top">
             <span class="country">Perú</span>
         </div>
@@ -94,18 +103,7 @@
             </div>
         </div>
     </footer>
-    <div id="dice-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>¡Salio el proyecto!</h3>
-            <div id="dice-result" class="dice-result">
-                <!-- Contenido dinámico -->
-            </div>
-            <button id="visit-project" class="action-button primary">
-                Visitar Proyecto
-            </button>
-        </div>
-    </div>
+
     <script src="assets/js/google-search.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>

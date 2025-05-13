@@ -1,0 +1,35 @@
+/* base.css */
+/* Reset y variables globales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html, body {
+    font-family: 'Roboto', Arial, sans-serif;
+    line-height: 1.6;
+    min-height: 100%;
+  }
+  img, picture, video, canvas, svg {
+    max-width: 100%;
+    display: block;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  :root {
+    --bg-light: #ffffff;
+    --text-light: #202124;
+    --border-light: #dfe1e5;
+    --card-light: #f8f9fa;
+    --icon-light: #9aa0a6;
+    --link-light: #1a0dab;
+    --bg-dark: #202124;
+    --text-dark: #e8eaed;
+    --border-dark: #5f6368;
+    --card-dark: #303134;
+    --icon-dark: #9aa0a6;
+    --link-dark: #8ab4f8;
+    --transition-fast: 0.2s;
+  }
